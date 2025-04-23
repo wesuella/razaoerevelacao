@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enviar Comentário - Razão Humana vs Revelação de Deus</title>
+  <!-- Bootstrap CSS (Replit theme) -->
+  <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+  <!-- Partículas de fundo -->
+  <div id="particles-background" class="position-fixed w-100 h-100" style="top: 0; left: 0; z-index: -1;"></div>
+
+  <header class="header py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-10 col-md-12 mx-auto text-center fade-in">
+          <h1 class="display-4 mb-3">Enviar Comentário</h1>
+          <p class="lead mb-0">Compartilhe sua opinião sobre a relação entre Razão Humana e Revelação Divina.</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container mb-5">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <!-- Botões de navegação -->
+        <div class="d-flex justify-content-center mb-4 flex-wrap fade-in">
+          <a href="{{ url_for('index') }}" class="btn btn-outline-primary me-md-3 mb-2 mb-md-0">
+            <i class="bi bi-arrow-left me-1"></i> Voltar ao Gráfico
+          </a>
+          <a href="{{ url_for('listar_comentarios') }}" class="btn btn-outline-info">
+            <i class="bi bi-chat-quote me-1"></i> Ver Comentários
+          </a>
+        </div>
+
+        <!-- Formulário de comentário -->
+        <div class="card shadow mb-4 fade-in">
+          <div class="card-body p-md-4">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }} alert-dismissible fade show mb-4 shadow-sm" role="alert">
+                    <div class="d-flex align-items-center">
+                      <div class="flex-shrink-0 me-2">
+                        {% if category == 'success' %}
+                          <i class="bi bi-check-circle fs-4"></i>
+                        {% elif category == 'danger' %}
+                          <i class="bi bi-exclamation-circle fs-4"></i>
+                        {% else %}
+                          <i class="bi bi-info-circle fs-4"></i>
+                        {% endif %}
+                      </div>
+                      <div class="flex-grow-1">
+                        {{ message }}
+                      </div>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+            
+            <form action="{{ url_for('enviar_comentario') }}" method="post" class="comment-form">
+              <div class="mb-4">
+                <label for="nome" class="form-label fw-bold">Nome <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <span class="input-group-text bg-transparent">
+                    <i class="bi bi-person"></i>
+                  </span>
+                  <input type="text" class="form-control" id="nome" name="nome" placeholder="Seu nome" required>
+                </div>
+              </div>
+              
+              <div class="mb-4">
+                <label for="email" class="form-label fw-bold">Email <span class="text-muted">(opcional)</span></label>
+                <div class="input-group">
+                  <span class="input-group-text bg-transparent">
+                    <i class="bi bi-envelope"></i>
+                  </span>
+                  <input type="email" class="form-control" id="email" name="email" placeholder="seu@email.com">
+                </div>
+                <div class="form-text mt-1">Seu email não será exibido publicamente.</div>
+              </div>
+              
+              <div class="mb-4">
+                <label for="texto" class="form-label fw-bold">Comentário <span class="text-danger">*</span></label>
+                <textarea class="form-control" id="texto" name="texto" rows="6" placeholder="Compartilhe seus pensamentos sobre a relação entre Razão Humana e Revelação Divina..." required></textarea>
+              </div>
+              
+              <input type="hidden" name="visualizacao_id" id="visualizacao_id">
+              
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-lg">
+                  <i class="bi bi-send me-2"></i> Enviar Comentário
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        
+        <!-- Informações adicionais -->
+        <div class="card shadow fade-in">
+          <div class="card-body p-md-4">
+            <h5 class="card-title d-flex align-items-center mb-3">
+              <i class="bi bi-info-circle me-2 text-info"></i>
+              Informações
+            </h5>
+            <div class="card-text">
+              <p class="mb-1">
+                <i class="bi bi-check2-circle me-2 text-success"></i>
+                Todos os comentários passarão por uma moderação antes de serem publicados.
+              </p>
+              <p class="mb-1">
+                <i class="bi bi-x-circle me-2 text-danger"></i>
+                Comentários ofensivos ou inapropriados não serão aprovados.
+              </p>
+              <p class="mb-0">
+                <i class="bi bi-eye me-2 text-primary"></i>
+                Seu comentário pode ser associado à sua visualização atual do gráfico, se disponível.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="mt-auto py-3">
+    <div class="container text-center">
+      <p class="text-muted small mb-0">© {{ now().year }} Razão vs Revelação - Todos os direitos reservados</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Particles JS -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  
+  <!-- Script para obter o ID da visualização da URL, se houver -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Obter ID da visualização
+      const urlParams = new URLSearchParams(window.location.search);
+      const visualizacaoId = urlParams.get('visualizacao_id');
+      
+      if (visualizacaoId) {
+        document.getElementById('visualizacao_id').value = visualizacaoId;
+      }
+      
+      // Inicializar partículas
+      if (typeof particlesJS !== 'undefined') {
+        particlesJS('particles-background', {
+          particles: {
+            number: { value: 80, density: { enable: true, value_area: 800 } },
+            color: { value: "#ffffff" },
+            opacity: { value: 0.05, random: true },
+            size: { value: 3, random: true },
+            line_linked: {
+              enable: true,
+              distance: 150,
+              color: "#ffffff",
+              opacity: 0.05,
+              width: 1
+            },
+            move: {
+              enable: true,
+              speed: 0.3,
+              direction: "none",
+              random: true,
+              straight: false,
+              out_mode: "out",
+              bounce: false
+            }
+          },
+          interactivity: {
+            detect_on: "canvas",
+            events: {
+              onhover: { enable: true, mode: "bubble" },
+              onclick: { enable: false }
+            },
+            modes: {
+              bubble: { distance: 250, size: 4, duration: 2, opacity: 0.1, speed: 3 }
+            }
+          },
+          retina_detect: true
+        });
+      }
+      
+      // Animações para o formulário
+      const formElements = document.querySelectorAll('.comment-form input, .comment-form textarea');
+      formElements.forEach(element => {
+        element.addEventListener('focus', function() {
+          this.parentElement.classList.add('shadow-sm');
+        });
+        element.addEventListener('blur', function() {
+          this.parentElement.classList.remove('shadow-sm');
+        });
+      });
+    });
+  </script>
+</body>
+</html>

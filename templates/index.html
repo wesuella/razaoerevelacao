@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Razão Humana vs Revelação de Deus</title>
+  <!-- Bootstrap CSS (Replit theme) -->
+  <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+  <!-- Partículas de fundo -->
+  <div id="particles-background" class="position-fixed w-100 h-100" style="top: 0; left: 0; z-index: -1;"></div>
+
+  <header class="header py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-10 col-md-12 mx-auto text-center fade-in">
+          <h1 class="display-4 mb-3">Razão Humana vs Revelação Divina</h1>
+          <p class="lead mb-0">Uma visualização interativa da relação entre confiar em nossa sabedoria e receber a revelação de Deus</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container mb-5">
+    <div class="row">
+      <div class="col-lg-10 col-md-12 mx-auto">
+        <!-- Cartão principal do gráfico -->
+        <div class="card shadow mb-4 fade-in">
+          <div class="card-body p-md-4">
+            <!-- Controle deslizante -->
+            <div class="slider-container mb-4">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <label for="razao-slider" class="form-label mb-0 fw-bold">Razão Humana (H)</label>
+                <span class="badge bg-primary rounded-pill px-3 py-2" id="razao-value">5.0</span>
+              </div>
+              <input type="range" class="form-range custom-range" id="razao-slider" min="0.1" max="10" step="0.1" value="5">
+              <div class="slider-labels">
+                <span>Mínima (Dependência em Deus)</span>
+                <span>Máxima (Confiança própria)</span>
+              </div>
+            </div>
+            
+            <!-- Canvas do gráfico -->
+            <div class="canvas-container mb-4">
+              <canvas id="graph" class="graph-canvas"></canvas>
+            </div>
+            
+            <!-- Exibição da fórmula -->
+            <div class="formula-display text-center">
+              <div class="d-flex justify-content-center align-items-center">
+                <div>
+                  <h5 class="mb-2">Fórmula:</h5>
+                  <p class="mb-1 fs-5"><strong>Revelação Divina (D) = 1 / Razão Humana (H)</strong></p>
+                  <p>Valor atual: D = <span id="divine-value" class="text-light fw-bold">0.2</span></p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Mensagens de dependência -->
+            <div class="messages-container mt-4">
+              <!-- Nível 10: Razão máxima - Orgulho -->
+              <div id="message-level-10" class="dependency-message alert alert-danger mt-3 shadow-lg border-start border-5 border-danger" style="display: none;">
+                <div class="d-flex flex-column flex-md-row align-items-md-center">
+                  <div class="flex-shrink-0 text-center mb-3 mb-md-0 me-md-3">
+                    <i class="bi bi-exclamation-triangle-fill fs-1"></i>
+                  </div>
+                  <div class="flex-grow-1">
+                    <h5 class="alert-heading">Cuidado com o orgulho da razão!</h5>
+                    <p class="mb-0">Quando o homem está com 100% da sua razão, ele está caminhando apenas pela sua própria sabedoria, sem depender da revelação divina.</p>
+                    <p class="fw-bold mt-2 mb-0 fst-italic">"Porque a sabedoria deste mundo é loucura diante de Deus" (1 Coríntios 3:19)</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Nível 9: Arrogância intelectual -->
+              <div id="message-level-9" class="dependency-message alert alert-danger mt-3 shadow-lg border-start border-5 border-danger" style="display: none;">
+                <div class="d-flex flex-column flex-md-row align-items-md-center">
+                  <div class="flex-shrink-0 text-center mb-3 mb-md-0 me-md-3">
+                    <i class="bi bi-exclamation-circle fs-1"></i>
+                  </div>
+                  <div class="flex-grow-1">
+                    <h5 class="alert-heading">Arrogância intelectual</h5>
+                    <p class="mb-0">Quando nos apoiamos excessivamente em nossa intelectualidade, ignoramos a voz do Espírito Santo.</p>
+                    <p class="fw-bold mt-2 mb-0 fst-italic">"Deus resiste aos soberbos, mas dá graça aos humildes." (Tiago 4:6)</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Nível 8: Confiança excessiva na razão -->
+              <div id="message-level-8" class="dependency-message alert alert-warning mt-3 shadow-lg border-start border-5 border-warning" style="display: none;">
+                <div class="d-flex flex-column flex-md-row align-items-md-center">
+                  <div class="flex-shrink-0 text-center mb-3 mb-md-0 me-md-3">
+                    <i class="bi bi-shield-exclamation fs-1"></i>
+                  </div>
+                  <div class="flex-grow-1">
+                    <h5 class="alert-heading">Confiança excessiva na razão humana</h5>
+                    <p class="mb-0">Quando confiamos demais em nossa própria inteligência, começamos a ignorar os sinais de Deus.</p>
+                    <p class="fw-bold mt-2 mb-0 fst-italic">"Não te estribes no teu próprio entendimento." (Provérbios 3:5)</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Nível 7: Ceticismo espiritual -->
+              <div id="message-level-7" class="dependency-message alert alert-warning mt-3 shadow-lg border-start border-5 border-warning" style="display: none;">
+                <div class="d-flex flex-column flex-md-row align-items-md-center">
+                  <div class="flex-shrink-0 text-center mb-3 mb-md-0 me-md-3">
+                    <i class="bi bi-question-circle fs-1"></i>
+                  </div>
+                  <div class="flex-grow-1">
+                    <h5 class="alert-heading">Ceticismo espiritual</h5>
+                    <p class="mb-0">Neste ponto, ainda questionamos muito as verdades espirituais, exigindo evidências.</p>
+                    <p class="fw-bold mt-2 mb-0 fst-italic">"Bem-aventurados os que não viram e creram." (João 20:29)</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Nível 6: Equilíbrio instável -->
+              <div id="message-level-6" class="dependency-message alert alert-info mt-3 shadow-lg border-start border-5 border-info" style="display: none;">
+                <div class="d-flex flex-column flex-md-row align-items-md-center">
+                  <div class="flex-shrink-0 text-center mb-3 mb-md-0 me-md-3">
+                    <i class="bi bi-balance-scale fs-1"></i>
+                  </div>
+                  <div class="flex-grow-1">
+                    <h5 class="alert-heading">Equilíbrio instável</h5>
+                    <p class="mb-0">Este ponto representa um equilíbrio instável entre confiar em si mesmo e confiar em Deus. Uma pequena mudança pode levar a direções opostas.</p>
+                    <p class="fw-bold mt-2 mb-0 fst-italic">"Ninguém pode servir a dois senhores." (Mateus 6:24)</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Nível 5: Primeiros sinais de rendição -->
+              <div id="message-level-5" class="dependency-message alert alert-info mt-3 shadow-lg border-start border-5 border-info" style="display: none;">
+                <div class="d-flex flex-column flex-md-row align-items-md-center">
+                  <div class="flex-shrink-0 text-center mb-3 mb-md-0 me-md-3">
+                    <i class="bi bi-cloud-sun fs-1"></i>
+                  </div>
+                  <div class="flex-grow-1">
+                    <h5 class="alert-heading">Primeiros sinais de rendição</h5>
+                    <p class="mb-0">Começamos a ver os primeiros raios da revelação divina em nossa vida.</p>
+                    <p class="fw-bold mt-2 mb-0 fst-italic">"Entrega o teu caminho ao Senhor; confia nele, e ele tudo fará." (Salmos 37:5)</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Nível 4: Começando a confiar em Deus -->
+              <div id="message-level-4" class="dependency-message alert alert-primary mt-3 shadow-lg border-start border-5 border-primary" style="display: none;">
+                <div class="d-flex flex-column flex-md-row align-items-md-center">
+                  <div class="flex-shrink-0 text-center mb-3 mb-md-0 me-md-3">
+                    <i class="bi bi-signpost-2 fs-1"></i>
+                  </div>
+                  <div class="flex-grow-1">
+                    <h5 class="alert-heading">Primeiros passos na fé</h5>
+                    <p class="mb-0">Ao diminuir a confiança na razão humana, começamos a abrir espaço para a revelação divina.</p>
+                    <p class="fw-bold mt-2 mb-0 fst-italic">"Confia no Senhor de todo o teu coração." (Provérbios 3:5)</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Nível 3: Crescimento espiritual -->
+              <div id="message-level-3" class="dependency-message alert alert-primary mt-3 shadow-lg border-start border-5 border-primary" style="display: none;">
+                <div class="d-flex flex-column flex-md-row align-items-md-center">
+                  <div class="flex-shrink-0 text-center mb-3 mb-md-0 me-md-3">
+                    <i class="bi bi-flower1 fs-1"></i>
+                  </div>
+                  <div class="flex-grow-1">
+                    <h5 class="alert-heading">Crescimento espiritual</h5>
+                    <p class="mb-0">Começamos a crescer na graça e conhecimento espiritual.</p>
+                    <p class="fw-bold mt-2 mb-0 fst-italic">"Crescei na graça e no conhecimento de nosso Senhor e Salvador Jesus Cristo." (2 Pedro 3:18)</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Nível 2: Mais dependência em Deus -->
+              <div id="message-level-2" class="dependency-message alert alert-success mt-3 shadow-lg border-start border-5 border-success" style="display: none;">
+                <div class="d-flex flex-column flex-md-row align-items-md-center">
+                  <div class="flex-shrink-0 text-center mb-3 mb-md-0 me-md-3">
+                    <i class="bi bi-brightness-high fs-1"></i>
+                  </div>
+                  <div class="flex-grow-1">
+                    <h5 class="alert-heading">Firmando passos na revelação divina</h5>
+                    <p class="mb-0">Neste ponto, a revelação divina se torna mais clara e presente, guiando nossas decisões.</p>
+                    <p class="fw-bold mt-2 mb-0 fst-italic">"Lâmpada para os meus pés é a tua palavra e luz para o meu caminho." (Salmos 119:105)</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Nível 1: Rendição quase completa -->
+              <div id="message-level-1" class="dependency-message alert alert-success mt-3 shadow-lg border-start border-5 border-success" style="display: none;">
+                <div class="d-flex flex-column flex-md-row align-items-md-center">
+                  <div class="flex-shrink-0 text-center mb-3 mb-md-0 me-md-3">
+                    <i class="bi bi-heart fs-1"></i>
+                  </div>
+                  <div class="flex-grow-1">
+                    <h5 class="alert-heading">Rendição quase completa</h5>
+                    <p class="mb-0">Nossa vontade está cada vez mais alinhada com a vontade de Deus.</p>
+                    <p class="fw-bold mt-2 mb-0 fst-italic">"Não se faça a minha vontade, mas a tua." (Lucas 22:42)</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Nível 0: Passos firmes em Deus -->
+              <div id="message-level-0" class="dependency-message alert alert-success mt-3 shadow-lg border-start border-5 border-success" style="display: none;">
+                <div class="d-flex flex-column flex-md-row align-items-md-center">
+                  <div class="flex-shrink-0 text-center mb-3 mb-md-0 me-md-3">
+                    <i class="bi bi-stars fs-1"></i>
+                  </div>
+                  <div class="flex-grow-1">
+                    <h5 class="alert-heading">Caminhando com Deus até a volta de Cristo</h5>
+                    <p class="mb-0">Quando nos rendemos completamente, caminhamos em plena comunhão com Deus, aguardando o retorno de Jesus.</p>
+                    <p class="fw-bold mt-2 mb-0 fst-italic">"Já estou crucificado com Cristo; e vivo, não mais eu, mas Cristo vive em mim." (Gálatas 2:20)</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Botões de ação -->
+            <div class="d-flex justify-content-center mt-4 flex-wrap">
+              <a href="{{ url_for('listar_comentarios') }}" class="btn btn-outline-info me-md-3 mb-2 mb-md-0">
+                <i class="bi bi-chat-quote me-1"></i> Ver Comentários
+              </a>
+              <a href="{{ url_for('enviar_comentario') }}" id="comment-link" class="btn btn-primary">
+                <i class="bi bi-chat-dots me-1"></i> Deixe seu Comentário
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cartão de explicação -->
+        <div class="card shadow fade-in">
+          <div class="card-body p-md-4">
+            <h4 class="card-title mb-3">
+              <i class="bi bi-info-circle me-2"></i>
+              Explicação
+            </h4>
+            <p class="card-text">
+              Este gráfico ilustra uma interpretação teológica da relação entre a <strong>Razão Humana</strong> e a <strong>Revelação Divina</strong>, 
+              representada como uma função inversa. Quando a dependência na razão humana aumenta, a percepção da 
+              revelação divina diminui proporcionalmente, e vice-versa.
+            </p>
+            <p class="card-text">
+              Ao mover o controle deslizante, você pode visualizar como os valores mudam e como o ponto correspondente se move ao longo da curva.
+              As mensagens exibidas representam diferentes estágios da jornada espiritual, mostrando como nossa dependência de Deus cresce à medida 
+              que reduzimos a confiança em nossa própria sabedoria.
+            </p>
+            <p class="card-text mb-0">
+              <strong>Como usar:</strong> Arraste o controle deslizante para a esquerda para diminuir a Razão Humana e aumentar a Revelação Divina, 
+              ou para a direita para aumentar a Razão Humana e diminuir a Revelação Divina.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="mt-auto py-3">
+    <div class="container text-center">
+      <p class="text-muted small mb-0">© {{ now().year }} Razão vs Revelação - Todos os direitos reservados</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Particles JS -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <!-- Custom JS -->
+  <script src="{{ url_for('static', filename='js/graph.js') }}"></script>
+  <script>
+    // Inicializar partículas
+    document.addEventListener('DOMContentLoaded', function() {
+      // Verificar se a biblioteca foi carregada
+      if (typeof particlesJS !== 'undefined') {
+        particlesJS('particles-background', {
+          particles: {
+            number: { value: 80, density: { enable: true, value_area: 800 } },
+            color: { value: "#ffffff" },
+            opacity: { value: 0.05, random: true },
+            size: { value: 3, random: true },
+            line_linked: {
+              enable: true,
+              distance: 150,
+              color: "#ffffff",
+              opacity: 0.05,
+              width: 1
+            },
+            move: {
+              enable: true,
+              speed: 0.3,
+              direction: "none",
+              random: true,
+              straight: false,
+              out_mode: "out",
+              bounce: false
+            }
+          },
+          interactivity: {
+            detect_on: "canvas",
+            events: {
+              onhover: { enable: true, mode: "bubble" },
+              onclick: { enable: false }
+            },
+            modes: {
+              bubble: { distance: 250, size: 4, duration: 2, opacity: 0.1, speed: 3 }
+            }
+          },
+          retina_detect: true
+        });
+      }
+    });
+  </script>
+</body>
+</html>

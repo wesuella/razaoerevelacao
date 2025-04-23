@@ -1,0 +1,363 @@
+/* Estilos personalizados para o aplicativo Razão vs Revelação */
+:root {
+  --gradient-start: rgba(20, 30, 48, 0.95);
+  --gradient-end: rgba(36, 59, 85, 0.9);
+  --card-bg: rgba(33, 37, 41, 0.8);
+  --card-hover-bg: rgba(44, 48, 52, 0.9);
+  --accent-color: #0d6efd;
+  --accent-hover: #0b5ed7;
+  --text-color: rgba(255, 255, 255, 0.9);
+  --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  --hover-shadow: 0 12px 42px rgba(0, 0, 0, 0.2);
+  --transition-normal: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --border-radius: 12px;
+  --border-radius-sm: 8px;
+}
+
+body {
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  background-attachment: fixed;
+  background-size: cover;
+  color: var(--text-color);
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Estilo para o container principal */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Efeito de destaque para títulos */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.display-4 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(90deg, #fff, #a8c0ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Estilo para o cabeçalho da página */
+.header {
+  margin-bottom: 2rem;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+/* Estilo para o canvas do gráfico */
+.canvas-container {
+  width: 100%;
+  min-height: 380px;
+  position: relative;
+  margin: 0 auto;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+}
+
+.graph-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--border-radius);
+  background-color: var(--card-bg);
+  transition: var(--transition-normal);
+}
+
+/* Estilo para o controle deslizante */
+.slider-container {
+  width: 100%;
+  margin: 24px auto;
+  padding: 0 15px;
+}
+
+.custom-range {
+  height: 12px;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 6px;
+  appearance: none;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: var(--transition-normal);
+}
+
+.custom-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  box-shadow: 0 0 10px rgba(13, 110, 253, 0.5);
+  cursor: pointer;
+  transition: var(--transition-normal);
+}
+
+.custom-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  box-shadow: 0 0 10px rgba(13, 110, 253, 0.5);
+  cursor: pointer;
+  transition: var(--transition-normal);
+}
+
+.custom-range:hover::-webkit-slider-thumb {
+  background-color: var(--accent-hover);
+  transform: scale(1.1);
+}
+
+.custom-range:hover::-moz-range-thumb {
+  background-color: var(--accent-hover);
+  transform: scale(1.1);
+}
+
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Estilos para exibição da fórmula */
+.formula-display {
+  background-color: var(--card-bg);
+  padding: 18px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  margin-bottom: 24px;
+  text-align: center;
+  border-left: 4px solid var(--accent-color);
+}
+
+/* Transições para as mensagens de dependência */
+.dependency-message {
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  opacity: 0;
+  display: none;
+  transform: translateY(15px);
+  margin-bottom: 1.5rem;
+}
+
+.dependency-message[style*="display: block"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Estilo para o cartão de explicação */
+.card {
+  border: none;
+  border-radius: var(--border-radius);
+  background-color: var(--card-bg);
+  box-shadow: var(--card-shadow);
+  transition: var(--transition-normal);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--hover-shadow);
+  background-color: var(--card-hover-bg);
+}
+
+.card-title {
+  color: white;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.card-text {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.7;
+}
+
+/* Botões estilizados */
+.btn {
+  border-radius: 50px;
+  padding: 0.5rem 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  transition: var(--transition-normal);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 7px 14px rgba(0, 0, 0, 0.15);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #0d6efd, #0a58ca);
+  border: none;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #0a58ca, #084298);
+}
+
+.btn-outline-primary, .btn-outline-info {
+  background: transparent;
+  border: 2px solid;
+}
+
+/* Estilo para comentários */
+.comment-card {
+  transition: var(--transition-normal);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.comment-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Estilo para formulários */
+.form-control {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  border-radius: var(--border-radius-sm);
+  padding: 0.8rem 1rem;
+}
+
+.form-control:focus {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-color: var(--accent-color);
+  color: white;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.form-control::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.form-label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.form-text {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Animações */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Ajustes para dispositivos móveis */
+@media (max-width: 768px) {
+  .display-4 {
+    font-size: 1.8rem;
+  }
+  
+  .canvas-container {
+    min-height: 300px;
+  }
+  
+  .slider-container {
+    padding: 0 10px;
+  }
+  
+  .card-body {
+    padding: 1.2rem;
+  }
+  
+  .dependency-message {
+    padding: 1rem;
+  }
+  
+  .btn {
+    padding: 0.4rem 1.2rem;
+    font-size: 0.9rem;
+  }
+  
+  h5.alert-heading {
+    font-size: 1.1rem;
+  }
+  
+  .formula-display {
+    padding: 12px;
+  }
+}
+
+/* Ajustes para dispositivos pequenos */
+@media (max-width: 576px) {
+  .display-4 {
+    font-size: 1.5rem;
+  }
+  
+  .canvas-container {
+    min-height: 250px;
+  }
+  
+  .container {
+    padding: 10px;
+  }
+  
+  .slider-labels {
+    font-size: 0.8rem;
+  }
+  
+  .btn {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+  
+  .d-flex {
+    flex-direction: column;
+  }
+  
+  .me-2 {
+    margin-right: 0 !important;
+  }
+}

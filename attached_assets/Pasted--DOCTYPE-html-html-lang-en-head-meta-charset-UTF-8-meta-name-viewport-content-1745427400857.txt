@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Razão Humana vs Revelação de Deus</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+    }
+    h1 {
+      margin-top: 20px;
+      color: #333;
+    }
+    .slider-container {
+      margin: 20px auto;
+      width: 80%;
+    }
+    #graph {
+      margin: 20px auto;
+      width: 80%;
+      height: 400px;
+      background-color: #ffffff;
+      border: 1px solid #ccc;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+  <h1>Razão Humana vs Revelação de Deus</h1>
+  <div class="slider-container">
+    <label for="razao-slider">Razão Humana (H): </label>
+    <input type="range" id="razao-slider" min="0.1" max="10" step="0.1" value="5">
+    <span id="razao-value">5</span>
+  </div>
+  <canvas id="graph"></canvas>
+  
+  <script>
+    const slider = document.getElementById("razao-slider");
+    const razaoValue = document.getElementById("razao-value");
+    const graphCanvas = document.getElementById("graph");
+    const ctx = graphCanvas.getContext("2d");
+
+    // Função para desenhar o gráfico
+    function drawGraph(razao) {
+      const width = graphCanvas.width = graphCanvas.offsetWidth;
+      const height = graphCanvas.height = graphCanvas.offsetHeight;
+
+      // Limpa o gráfico
+      ctx.clearRect(0, 0, width, height);
+
+      // Configuração do gráfico
+      const margin = 40;
+      const graphWidth = width - margin * 2;
+      const graphHeight = height - margin * 2;
+
+      const maxH = 10; // Máximo valor de H
+      const maxD = 1; // Máximo valor de D
+
+      // Eixos
+      ctx.beginPath();
+      ctx.moveTo(margin, margin);
+      ctx.lineTo(margin, height - margin);
+      ctx.lineTo(width - margin, height - margin);
+      ctx.strokeStyle = "#333";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Label dos eixos
+      ctx.font = "14px Arial";
+      ctx.fillStyle = "#333";
+      ctx.fillText("Revelação Divina (D)", margin - 20, margin - 10);
+      ctx.fillText("Razão Humana (H)", width - margin - 50, height - margin + 30);
+
+      // Desenhar curva
+      ctx.beginPath();
+      for (let x = 0; x <= graphWidth; x++) {
+        const h = (x / graphWidth) * maxH; // Converter posição em valor de H
+        const d = 1 / h; // Cálculo de D
+        const y = graphHeight - (d / maxD) * graphHeight; // Converter D para posição no gráfico
+        if (x === 0) ctx.moveTo(margin + x, margin + y);
+        else ctx.lineTo(margin + x, margin + y);
+      }
+      ctx.strokeStyle = "#007bff";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Desenhar ponto atual
+      const currentX = ((razao / maxH) * graphWidth);
+      const currentY = graphHeight - ((1 / razao) / maxD) * graphHeight;
+
+      ctx.beginPath();
+      ctx.arc(margin + currentX, margin + currentY, 5, 0, Math.PI * 2);
+      ctx.fillStyle = "#ff5733";
+      ctx.fill();
+    }
+
+    // Atualiza o gráfico e valor do slider
+    slider.addEventListener("input", (e) => {
+      const razao = parseFloat(e.target.value);
+      razaoValue.textContent = razao.toFixed(1);
+      drawGraph(razao);
+    });
+
+    // Inicializar gráfico
+    drawGraph(parseFloat(slider.value));
+  </script>
+</body>
+</html>
